@@ -3,10 +3,21 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
-  <header>
-    <div >
+  <header class="h-16 text-2xl bg-gray-950 text-white flex justify-center items-center">
+    <div class="max-w-[75rem] w-full mx-4">
       <nav>
-        <RouterLink to="/">Home</RouterLink>
+        <RouterLink
+          class="mr-4"
+          to="/">Showtimes
+        </RouterLink>
+        <RouterLink
+          class="mr-4"
+          to="/">Movies
+        </RouterLink>
+        <RouterLink
+          class="mr-4"
+          to="/">Personal
+        </RouterLink>
       </nav>
     </div>
   </header>
