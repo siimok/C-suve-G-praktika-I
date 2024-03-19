@@ -25,6 +25,8 @@ public class MovieEntity {
 
     private Float rating;
 
+    private Integer minimumAge;
+
     private Integer published;
 
     private String description;

@@ -56,7 +56,14 @@ public class MovieController {
     public List<MovieDto> listMovies() {
         List<MovieEntity> movies = movieService.findAll();
         return movies.stream()
-                .map(movieMapper::mapTo)
+                .map(movie -> {
+                    MovieDto movieDto = movieMapper.mapTo(movie);
+                    List<GenreDto> genreDtos = movie.getGenres().stream()
+                            .map(genreMapper::mapTo)
+                            .collect(Collectors.toList());
+                    movieDto.setGenres(Optional.of(genreDtos));
+                    return movieDto;
+                })
                 .collect(Collectors.toList());
     }
 
@@ -65,6 +72,10 @@ public class MovieController {
         Optional<MovieEntity> foundMovie = movieService.findOne(id);
         return foundMovie.map(movieEntity -> {
             MovieDto movieDto = movieMapper.mapTo(movieEntity);
+            List<GenreDto> genreDtos = movieEntity.getGenres().stream()
+                    .map(genreMapper::mapTo)
+                    .collect(Collectors.toList());
+            movieDto.setGenres(Optional.of(genreDtos));
             return new ResponseEntity<>(movieDto, HttpStatus.OK);
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }

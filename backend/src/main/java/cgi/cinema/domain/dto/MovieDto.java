@@ -21,6 +21,8 @@ public class MovieDto {
 
     private Integer published;
 
+    private Integer minimumAge;
+
     private String description;
 
     private Optional<List<Long>> genreIds;
