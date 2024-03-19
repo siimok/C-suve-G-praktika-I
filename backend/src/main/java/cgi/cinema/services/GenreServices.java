@@ -4,6 +4,7 @@ import cgi.cinema.domain.entities.GenreEntity;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface GenreServices {
     GenreEntity save(GenreEntity genreEntity);
@@ -11,6 +12,8 @@ public interface GenreServices {
     List<GenreEntity> findAll();
 
     Optional<GenreEntity> findOne(Long id);
+
+    Set<GenreEntity> findMultiple(List<Long> ids);
 
     boolean isExists(Long id);
 
