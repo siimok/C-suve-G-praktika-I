@@ -1,5 +1,6 @@
 package cgi.cinema.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,5 +24,6 @@ public class GenreEntity {
     private String name;
 
     @ManyToMany(mappedBy = "genres")
+    @JsonIgnore
     private Set<MovieEntity> movies;
 }
