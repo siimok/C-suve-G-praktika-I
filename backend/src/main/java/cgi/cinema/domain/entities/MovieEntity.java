@@ -1,5 +1,6 @@
 package cgi.cinema.domain.entities;
 
+import cgi.cinema.domain.Language;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,6 +29,8 @@ public class MovieEntity {
     private Integer minimumAge;
 
     private Integer published;
+
+    private Language language;
 
     private String description;
 
