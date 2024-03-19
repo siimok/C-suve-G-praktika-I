@@ -2,9 +2,11 @@ package cgi.cinema.services.impl;
 
 import cgi.cinema.domain.entities.MovieEntity;
 import cgi.cinema.repositories.MovieRepository;
+import cgi.cinema.repositories.specifications.MovieSpecification;
 import cgi.cinema.services.MovieService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,6 +33,16 @@ public class MovieServiceImpl implements MovieService {
                                 .spliterator(),
                         false)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<MovieEntity> findAllByCriteria(
+            Long genreId,
+            LocalDateTime startTime,
+            Integer minimumAge,
+            String keyword
+    ) {
+        return movieRepository.findAll(MovieSpecification.filterMovies(genreId, startTime, minimumAge, keyword));
     }
 
     @Override

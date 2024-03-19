@@ -11,7 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -53,8 +57,13 @@ public class MovieController {
     }
 
     @GetMapping(path = "/movies")
-    public List<MovieDto> listMovies() {
-        List<MovieEntity> movies = movieService.findAll();
+    public List<MovieDto> listMovies(
+            @RequestParam(required = false) Long genreId,
+            @RequestParam(required = false) LocalDateTime startTime,
+            @RequestParam(required = false) Integer minimumAge,
+            @RequestParam(required = false) String keyword
+    ) {
+        List<MovieEntity> movies = movieService.findAllByCriteria(genreId, startTime, minimumAge, keyword);
         return movies.stream()
                 .map(movie -> {
                     MovieDto movieDto = movieMapper.mapTo(movie);
