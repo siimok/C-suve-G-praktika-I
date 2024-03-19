@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @AllArgsConstructor
@@ -22,7 +23,9 @@ public class MovieDto {
 
     private String description;
 
-    private List<GenreDto> genres;
+    private Optional<List<Long>> genreIds;
 
-    private List<SessionDto> sessions;
+    private Optional<List<GenreDto>> genres;
+
+    private Optional<List<SessionDto>> sessions;
 }

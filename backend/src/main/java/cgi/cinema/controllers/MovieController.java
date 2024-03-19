@@ -1,15 +1,17 @@
 package cgi.cinema.controllers;
 
+import cgi.cinema.domain.dto.GenreDto;
 import cgi.cinema.domain.dto.MovieDto;
+import cgi.cinema.domain.entities.GenreEntity;
 import cgi.cinema.domain.entities.MovieEntity;
 import cgi.cinema.mappers.Mapper;
+import cgi.cinema.services.GenreServices;
 import cgi.cinema.services.MovieService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -17,16 +19,35 @@ public class MovieController {
 
     private MovieService movieService;
 
+    private GenreServices genreServices;
+
     private Mapper<MovieEntity, MovieDto> movieMapper;
 
-    public MovieController(MovieService movieService, Mapper<MovieEntity, MovieDto> movieMapper) {
+    private Mapper<GenreEntity, GenreDto> genreMapper;
+
+    public MovieController(MovieService movieService,
+                           GenreServices genreServices,
+                           Mapper<MovieEntity, MovieDto> movieMapper,
+                           Mapper<GenreEntity, GenreDto> genreMapper) {
         this.movieService = movieService;
+        this.genreServices = genreServices;
         this.movieMapper = movieMapper;
+        this.genreMapper = genreMapper;
     }
 
     @PostMapping(path = "/movies")
     public ResponseEntity<MovieDto> createMovie(@RequestBody MovieDto movie) {
+
+        Set<GenreEntity> genreEntities = new HashSet<>();
+
+        if (movie.getGenreIds().isPresent()) {
+            List<Long> genreIds = movie.getGenreIds().get();
+            genreEntities = genreServices.findMultiple(genreIds);
+        }
+
         MovieEntity movieEntity = movieMapper.mapFrom(movie);
+        movieEntity.setGenres(genreEntities);
+
         MovieEntity savedMovieEntity = movieService.save(movieEntity);
         return new ResponseEntity<>(movieMapper.mapTo(savedMovieEntity), HttpStatus.CREATED);
     }
@@ -53,7 +74,7 @@ public class MovieController {
             @PathVariable("id") Long id,
             @RequestBody MovieDto movieDto) {
 
-        if(!movieService.isExists(id)) {
+        if (!movieService.isExists(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
