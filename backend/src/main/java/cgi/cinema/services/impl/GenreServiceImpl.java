@@ -3,12 +3,14 @@ package cgi.cinema.services.impl;
 import cgi.cinema.domain.entities.GenreEntity;
 import cgi.cinema.repositories.GenreRepository;
 import cgi.cinema.services.GenreServices;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+@Service
 public class GenreServiceImpl implements GenreServices {
 
     private GenreRepository genreRepository;
