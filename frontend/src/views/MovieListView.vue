@@ -1,8 +1,10 @@
 <script setup lang="ts">
 
 import { ref } from 'vue'
+import type { Movie } from '@/types/types'
+import MovieList from '@/components/MovieList.vue'
 
-const movies = ref([])
+const movies = ref<Array<Movie>>([])
 
 const fetchMovies = async () => {
   try {
@@ -20,7 +22,7 @@ fetchMovies()
 <template>
   <main class="flex justify-center">
     <div class="max-w-[75rem] w-full mx-4 pt-4 md:pt-16">
-      {{ movies }}
+      <movie-list :movies/>
     </div>
   </main>
 </template>
