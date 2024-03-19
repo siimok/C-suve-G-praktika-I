@@ -22,15 +22,12 @@ public class SessionEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sessin_id_seq")
     private Long id;
 
-    private Long movieId;
-
     private LocalDateTime startTime;
 
     @ManyToOne
     @JoinColumn(name="movie_id", nullable=false)
     private MovieEntity movie;
 
-    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL)
-    @JoinColumn(name = "ticket_id")
+    @OneToMany(mappedBy = "session", cascade = CascadeType.ALL)
     private Set<TicketEntity> tickets = new HashSet<>();
 }

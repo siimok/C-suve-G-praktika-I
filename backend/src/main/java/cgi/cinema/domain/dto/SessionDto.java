@@ -15,7 +15,7 @@ import java.util.List;
 public class SessionDto {
     private Long id;
 
-    private Long movieId;
+    private Long movie_id;
 
     private LocalDateTime startTime;
 

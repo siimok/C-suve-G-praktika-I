@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MovieService {
-    MovieEntity save(MovieEntity authorEntity);
+    MovieEntity save(MovieEntity movieEntity);
 
     List<MovieEntity> findAll();
 

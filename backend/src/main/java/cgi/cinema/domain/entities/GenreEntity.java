@@ -22,6 +22,6 @@ public class GenreEntity {
 
     private String name;
 
-    @ManyToMany(mappedBy = "movie_genre")
+    @ManyToMany(mappedBy = "genres")
     private Set<MovieEntity> movies;
 }

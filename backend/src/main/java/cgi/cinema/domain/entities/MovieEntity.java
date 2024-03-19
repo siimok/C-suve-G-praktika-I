@@ -37,6 +37,5 @@ public class MovieEntity {
     private Set<GenreEntity> genres = new HashSet<>();
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
-    @JoinColumn(name = "session_id")
     private Set<SessionEntity> sessions = new HashSet<>();
 }
