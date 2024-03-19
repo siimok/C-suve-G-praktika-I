@@ -12,7 +12,7 @@ import { RouterLink, RouterView } from 'vue-router'
         </RouterLink>
         <RouterLink
           class="mr-4"
-          to="/">Movies
+          to="/movies">Movies
         </RouterLink>
         <RouterLink
           class="mr-4"
