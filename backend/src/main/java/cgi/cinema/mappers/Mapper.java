@@ -1,4 +1,4 @@
-package cgi.cinema.mapper;
+package cgi.cinema.mappers;
 
 public interface Mapper<A,B> {
 

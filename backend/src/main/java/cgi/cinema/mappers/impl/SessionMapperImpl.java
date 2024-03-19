@@ -1,8 +1,8 @@
-package cgi.cinema.mapper.impl;
+package cgi.cinema.mappers.impl;
 
 import cgi.cinema.domain.dto.SessionDto;
 import cgi.cinema.domain.entities.SessionEntity;
-import cgi.cinema.mapper.Mapper;
+import cgi.cinema.mappers.Mapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
