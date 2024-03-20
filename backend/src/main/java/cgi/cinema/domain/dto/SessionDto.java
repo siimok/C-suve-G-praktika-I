@@ -15,9 +15,19 @@ import java.util.List;
 public class SessionDto {
     private Long id;
 
-    private Long movie_id;
+    private Long movieId;
 
     private LocalDateTime startTime;
 
     private List<TicketDto> tickets;
+
+    @Override
+    public String toString() {
+        return "SessionEntity{" +
+                "id=" + id +
+                ", startTime=" + startTime +
+                ", tickets=" + (tickets != null ? tickets.size() : "null") + // Include ticket count instead of printing tickets directly
+                ", movie=Id" + (movieId != null ? movieId : "null") + // Include movie ID instead of printing the whole movie object
+                '}';
+    }
 }

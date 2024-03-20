@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class TicketDto {
     private Long id;
 
-    private Long SessionId;
+    private Long sessionId;
 
     //This cinema has one viewing room.
     //7 rows
@@ -20,4 +20,14 @@ public class TicketDto {
 
     //10 seats in a row
     private Integer seatNumber;
+
+    @Override
+    public String toString() {
+        return "TicketDto{" +
+                "id=" + id +
+                ", sessionId=" + sessionId +
+                ", rowNumber=" + rowNumber +
+                ", seatNumber=" + seatNumber +
+                '}';
+    }
 }

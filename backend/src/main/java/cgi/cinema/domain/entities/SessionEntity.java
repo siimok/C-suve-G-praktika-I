@@ -1,5 +1,6 @@
 package cgi.cinema.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,8 +25,9 @@ public class SessionEntity {
 
     private LocalDateTime startTime;
 
-    @ManyToOne
-    @JoinColumn(name="movie_id", nullable=false)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "movie_id", nullable = false)
     private MovieEntity movie;
 
     @OneToMany(mappedBy = "session", cascade = CascadeType.ALL)

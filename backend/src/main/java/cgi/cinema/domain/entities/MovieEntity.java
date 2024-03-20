@@ -41,6 +41,6 @@ public class MovieEntity {
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<GenreEntity> genres;
 
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<SessionEntity> sessions;
 }

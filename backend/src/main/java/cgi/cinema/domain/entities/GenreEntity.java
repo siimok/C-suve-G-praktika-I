@@ -23,12 +23,4 @@ public class GenreEntity {
     @JsonIgnore
     @ManyToMany(mappedBy = "genres")
     private List<MovieEntity> movies;
-
-    @Override
-    public String toString() {
-        return "GenreEntity{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
 }
