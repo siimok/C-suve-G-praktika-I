@@ -16,7 +16,7 @@ const props = defineProps({ movie: { type: Object as PropType<Movie> } })
         {{ movie?.name }}
       </h2>
 
-      <movie-stars></movie-stars>
+      <movie-stars count:movie.rating />
 
       <h3 class="capitalize flex justify-between text-right mt-2">
         <p>Language: {{ movie?.language ? movie?.language : 'Estonian' }}</p>
