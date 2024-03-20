@@ -7,8 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,7 +18,7 @@ import java.util.Set;
 public class MovieEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "movie_id_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -36,13 +35,12 @@ public class MovieEntity {
 
     private String imageUrl;
 
-    @ManyToMany
-    @JoinTable(
-            name = "movie_genre",
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "movie_genre",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private Set<GenreEntity> genres = new HashSet<>();
+    private List<GenreEntity> genres;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
-    private Set<SessionEntity> sessions = new HashSet<>();
+    private List<SessionEntity> sessions;
 }

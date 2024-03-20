@@ -2,12 +2,9 @@ package cgi.cinema.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -18,12 +15,20 @@ import java.util.Set;
 public class GenreEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "genre_id_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
-    @ManyToMany(mappedBy = "genres")
     @JsonIgnore
-    private Set<MovieEntity> movies;
+    @ManyToMany(mappedBy = "genres")
+    private List<MovieEntity> movies;
+
+    @Override
+    public String toString() {
+        return "GenreEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

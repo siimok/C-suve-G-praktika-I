@@ -12,10 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -43,7 +40,7 @@ public class MovieController {
     @PostMapping(path = "/movies")
     public ResponseEntity<MovieDto> createMovie(@RequestBody MovieDto movie) {
 
-        Set<GenreEntity> genreEntities = new HashSet<>();
+        List<GenreEntity> genreEntities = new ArrayList<>();
 
         if (movie.getGenreIds().isPresent()) {
             List<Long> genreIds = movie.getGenreIds().get();

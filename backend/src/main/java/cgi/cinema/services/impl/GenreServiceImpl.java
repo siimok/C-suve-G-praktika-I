@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -40,7 +39,7 @@ public class GenreServiceImpl implements GenreServices {
     }
 
     @Override
-    public Set<GenreEntity> findMultiple(List<Long> ids) {
+    public List<GenreEntity> findMultiple(List<Long> ids) {
         return genreRepository.findByIdIn(ids);
     }
 
