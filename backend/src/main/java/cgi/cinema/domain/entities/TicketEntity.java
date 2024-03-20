@@ -1,5 +1,6 @@
 package cgi.cinema.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,15 +12,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "ticket")
+@Table(name = "ticket", uniqueConstraints = @UniqueConstraint(columnNames = {"session_id", "row_number", "seat_number"}))
 public class TicketEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ticket_id_seq")
     private Long id;
 
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name="session_id", nullable=false)
+    @JoinColumn(name = "session_id", nullable = false)
     private SessionEntity session;
 
     //This cinema has one viewing room.
