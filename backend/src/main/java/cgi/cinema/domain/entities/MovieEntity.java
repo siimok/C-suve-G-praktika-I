@@ -34,6 +34,8 @@ public class MovieEntity {
 
     private String description;
 
+    private String imageUrl;
+
     @ManyToMany
     @JoinTable(
             name = "movie_genre",

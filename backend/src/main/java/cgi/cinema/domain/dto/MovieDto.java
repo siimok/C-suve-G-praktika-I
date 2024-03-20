@@ -28,6 +28,8 @@
 
         private String description;
 
+        private String imageUrl;
+
         private Optional<List<Long>> genreIds;
 
         private Optional<List<GenreDto>> genres;
