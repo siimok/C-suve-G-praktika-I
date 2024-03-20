@@ -14,6 +14,7 @@ const movie = ref({
   minimumAge: 0,
   language: 'ESTONIAN',
   description: '',
+  imageUrl: '',
   genres: [],
   sessions: []
 })
@@ -42,17 +43,21 @@ fetchMovie()
           class="object-cover w-full h-full"
         >
       </div>
-      <div class="w-2/3">
-        <h1>{{ movie.name }}</h1>
+      <div class="w-2/3 md:pl-10">
+        <h1 class="text-3xl font-bold">{{ movie.name }}</h1>
 
         <h2 class="capitalize flex justify-between text-right mt-3">
-          <p>Language: {{ movie?.language ? movie?.language : 'Estonian' }}</p>
+          <p>Language:
+            <span class="capitalize font-semibold">
+              {{ movie?.language ? movie?.language : 'Estonian' }}
+            </span>
+          </p>
           <p>{{ movie?.published }}</p>
         </h2>
 
-        <div class="mt-auto flex">
+        <div class="my-4 flex">
           <div
-            v-for="(genre, index) in movie?.genres"
+            v-for="(genre, index) in movie.genres"
             :key="index"
             class="px-3 py-1   mr-2 border rounded-full"
           >
@@ -62,10 +67,7 @@ fetchMovie()
         <p class="capitalize text-ellipsis overflow-hidden">
           {{ movie?.description }}
         </p>
-        {{ movie }}
-
       </div>
-
     </div>
   </main>
 </template>

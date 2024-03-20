@@ -1,26 +1,40 @@
 <script setup lang="ts">
 
-import type { PropType } from 'vue'
+import { computed, type PropType } from 'vue'
 import type { Movie } from '@/types/types'
 import MovieStars from '@/components/MovieStars.vue'
 
 const props = defineProps({ movie: { type: Object as PropType<Movie> } })
 
+const languageFlag = computed(() =>
+  props.movie?.language ?
+    '/src/assets/flags/' + props.movie?.language + '.png' :
+    '/src/assets/flags/ESTONIAN.png')
+
 </script>
 
 <template>
+  <router-link :to="'movie/' + movie?.id">
     <div class="flex flex-auto relative border border-gray-200 rounded-lg shadow hover:scale-105 w-full h-64">
-      <div class="h-100 w-1/2 bg-gray-100">Image placeholder</div>
-      <div class="w-1/2 p-4">
+      <div class="h-100 w-1/3 bg-gray-100 relative">
+        <img
+          :src="movie?.imageUrl"
+          class="object-cover w-full h-full rounded-l-lg"
+        />
+        <img
+          :src="languageFlag"
+          class="absolute bottom-2 right-2"
+        >
+      </div>
+      <div class="w-2/3 p-4">
         <div>
           <h2 class="h-16 text-center font-bold text-2xl capitalize overflow-ellipsis overflow-hidden">
             {{ movie?.name }}
           </h2>
 
-          <movie-stars count:movie.rating />
+          <movie-stars :count="movie.rating" />
 
           <h3 class="capitalize flex justify-between text-right mt-3">
-            <p>Language: {{ movie?.language ? movie?.language : 'Estonian' }}</p>
             <p>{{ movie?.published }}</p>
           </h3>
 
@@ -40,7 +54,7 @@ const props = defineProps({ movie: { type: Object as PropType<Movie> } })
         </div>
       </div>
     </div>
-
+  </router-link>
 </template>
 
 <style scoped>
