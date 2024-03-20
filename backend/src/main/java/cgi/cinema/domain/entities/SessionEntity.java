@@ -8,8 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -31,5 +31,5 @@ public class SessionEntity {
     private MovieEntity movie;
 
     @OneToMany(mappedBy = "session", cascade = CascadeType.ALL)
-    private Set<TicketEntity> tickets = new HashSet<>();
+    private List<TicketEntity> tickets = new ArrayList<>();
 }
