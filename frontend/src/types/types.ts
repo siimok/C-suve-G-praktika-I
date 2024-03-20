@@ -6,6 +6,7 @@ export interface Movie {
   minimumAge: number,
   language: 'ESTONIAN' | 'ENGLISH' | 'RUSSIAN' | 'FRENCH',
   description: string,
+  imageUrl: string,
   genres: Array<Genre>,
   sessions: null,
 }
