@@ -2,7 +2,7 @@
 
 import { ref } from 'vue'
 import type { Movie } from '@/types/types'
-import MovieList from '@/components/MovieList.vue'
+import MovieList from '@/components/movieList/MovieList.vue'
 
 const movies = ref<Array<Movie>>([])
 

@@ -2,7 +2,7 @@
 
 import { computed, type PropType } from 'vue'
 import type { Movie } from '@/types/types'
-import MovieStars from '@/components/MovieStars.vue'
+import MovieStars from '@/components/movieList/MovieStars.vue'
 
 const props = defineProps({ movie: { type: Object as PropType<Movie> } })
 

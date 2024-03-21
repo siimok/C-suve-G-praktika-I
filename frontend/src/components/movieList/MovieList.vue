@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
 import type { Movie } from '@/types/types'
-import MovieCard from '@/components/MovieCard.vue'
+import MovieCard from '@/components/movieList/MovieCard.vue'
 
 const props = defineProps({ movies: { type: Object as PropType<Array<Movie>> } })
 </script>

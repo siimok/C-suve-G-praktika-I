@@ -8,7 +8,21 @@ export interface Movie {
   description: string,
   imageUrl: string,
   genres: Array<Genre>,
-  sessions: null,
+  sessions: Array<Session>,
+}
+
+export interface Session {
+  id: number,
+  movieId: number,
+  startTime: string,
+  tickets: Array<Ticket>,
+}
+
+export interface Ticket {
+  id: number,
+  sessionId: number,
+  rowNumber: string,
+  seatNumber: string,
 }
 
 interface Genre {
