@@ -38,7 +38,3 @@ const props = defineProps({ session: { type: Object as PropType<Session> } })
     <button class="bg-yellow-500 rounded-lg p-3 text-white text-xl font-semibold">Buy a ticket</button>
   </div>
 </template>
-
-<style scoped>
-
-</style>

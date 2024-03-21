@@ -1,7 +1,6 @@
 <script setup lang="ts">
 
 import { useRoute } from 'vue-router'
-import router from '@/router'
 import { ref } from 'vue'
 import MovieDetails from '@/components/movieDetails/MovieDetails.vue'
 import SessionList from '@/components/movieDetails/SessionList.vue'
