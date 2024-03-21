@@ -25,7 +25,7 @@ export interface Ticket {
   seatNumber: number,
 }
 
-interface Genre {
+export interface Genre {
   id: number,
   name: string
 }
