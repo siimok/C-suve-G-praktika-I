@@ -2,6 +2,8 @@
 import { computed, type PropType } from 'vue'
 import type { Session } from '@/types/types'
 
+const props = defineProps({ session: { type: Object as PropType<Session> } })
+
 const day = computed(() => {
   const startTime = props.session.startTime
   return startTime ? new Date(startTime).toLocaleDateString('en-US', { weekday: 'long' }) : ''
@@ -20,9 +22,6 @@ const sessionDate = computed(() => {
   const startTime = props.session.startTime
   return startTime ? new Date(startTime).toLocaleDateString('en-US').replace(/\//g, '.') : ''
 })
-
-
-const props = defineProps({ session: { type: Object as PropType<Session> } })
 </script>
 
 <template>
@@ -35,6 +34,9 @@ const props = defineProps({ session: { type: Object as PropType<Session> } })
       </div>
     </div>
     <p class="mr-4">Available seats: {{ 70 - session.tickets.length }}/70</p>
-    <button class="bg-yellow-500 rounded-lg p-3 text-white text-xl font-semibold">Buy a ticket</button>
+
+    <router-link :to="'/session/' + session?.id">
+      <button class="bg-yellow-500 rounded-lg p-3 text-white text-xl font-semibold">Buy a ticket</button>
+    </router-link>
   </div>
 </template>

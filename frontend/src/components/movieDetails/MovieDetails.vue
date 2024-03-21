@@ -9,13 +9,13 @@ const props = defineProps({ movie: { type: Object as PropType<Movie> } })
 
 <template>
   <div class="md:flex">
-    <div class="w-1/3">
+    <div class="w-1/4">
       <img
         :src="movie?.imageUrl"
         class="object-cover w-full h-full"
       >
     </div>
-    <div class="w-2/3 md:pl-10">
+    <div class="w-3/4 md:pl-10">
       <h1 class="text-3xl font-bold">{{ movie?.name }}</h1>
 
       <h2 class="capitalize flex justify-between text-right mt-3">
