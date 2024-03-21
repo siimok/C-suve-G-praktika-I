@@ -2,8 +2,10 @@ package cgi.cinema.controllers;
 
 import cgi.cinema.domain.dto.GenreDto;
 import cgi.cinema.domain.dto.MovieDto;
+import cgi.cinema.domain.dto.SessionDto;
 import cgi.cinema.domain.entities.GenreEntity;
 import cgi.cinema.domain.entities.MovieEntity;
+import cgi.cinema.domain.entities.SessionEntity;
 import cgi.cinema.mappers.Mapper;
 import cgi.cinema.services.GenreServices;
 import cgi.cinema.services.MovieService;
@@ -12,7 +14,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -27,14 +32,19 @@ public class MovieController {
 
     private Mapper<GenreEntity, GenreDto> genreMapper;
 
+    private Mapper<SessionEntity, SessionDto> sessionMapper;
+
     public MovieController(MovieService movieService,
                            GenreServices genreServices,
                            Mapper<MovieEntity, MovieDto> movieMapper,
-                           Mapper<GenreEntity, GenreDto> genreMapper) {
+                           Mapper<GenreEntity, GenreDto> genreMapper,
+                           Mapper<SessionEntity, SessionDto> sessionMapper
+    ) {
         this.movieService = movieService;
         this.genreServices = genreServices;
         this.movieMapper = movieMapper;
         this.genreMapper = genreMapper;
+        this.sessionMapper = sessionMapper;
     }
 
     @PostMapping(path = "/movies")
@@ -59,9 +69,9 @@ public class MovieController {
             @RequestParam(required = false) Long genreId,
             @RequestParam(required = false) LocalDateTime startTime,
             @RequestParam(required = false) Integer minimumAge,
-            @RequestParam(required = false) String keyword
+            @RequestParam(required = false) String title
     ) {
-        List<MovieEntity> movies = movieService.findAllByCriteria(genreId, startTime, minimumAge, keyword);
+        List<MovieEntity> movies = movieService.findAllByCriteria(genreId, startTime, minimumAge, title);
         return movies.stream()
                 .map(movie -> {
                     MovieDto movieDto = movieMapper.mapTo(movie);
@@ -69,6 +79,15 @@ public class MovieController {
                             .map(genreMapper::mapTo)
                             .collect(Collectors.toList());
                     movieDto.setGenres(Optional.of(genreDtos));
+                    // Convert SessionEntity to SessionDto and set an empty list of tickets
+                    List<SessionDto> sessionDtos = movie.getSessions().stream()
+                            .map(session -> {
+                                SessionDto sessionDto = sessionMapper.mapTo(session); // Assuming you have a sessionMapper
+                                sessionDto.setTickets(Collections.emptyList()); // Set tickets to empty list
+                                return sessionDto;
+                            })
+                            .collect(Collectors.toList());
+                    movieDto.setSessions(Optional.of(sessionDtos));
                     return movieDto;
                 })
                 .collect(Collectors.toList());

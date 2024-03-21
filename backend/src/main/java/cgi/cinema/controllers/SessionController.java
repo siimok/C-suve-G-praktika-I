@@ -24,7 +24,9 @@ public class SessionController {
 
     private Mapper<SessionEntity, SessionDto> sessionMapper;
 
-    public SessionController(SessionServices sessionServices, MovieService movieServices, Mapper<SessionEntity, SessionDto> sessionMapper) {
+    public SessionController(SessionServices sessionServices,
+                             MovieService movieServices,
+                             Mapper<SessionEntity, SessionDto> sessionMapper) {
         this.sessionServices = sessionServices;
         this.sessionMapper = sessionMapper;
         this.movieServices = movieServices;

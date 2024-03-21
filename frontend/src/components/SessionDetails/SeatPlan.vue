@@ -39,14 +39,12 @@ function findBestSeats(groupSize: number) {
     seatingPlan[rowNumber] = replaceCharAtIndex(seatingPlan[rowNumber], seatNumber)
   })
 
-  console.log(seatingPlan)
-
   let bestScore = 100
   let bestStartingPosition
 
   //Optimal place to start seating the party
   let optimalStartSeat = 6 - Math.ceil(groupSize / 2)
-  let optimalRow = 4
+  let optimalRow = 3
 
   for (let i = 0; i < 7; i++) {
     let currentScore = 0
@@ -105,9 +103,6 @@ function buyTickets() {
 
 <template>
   <div class="inline-flex flex-col items-center mt-10">
-    {{ alreadyBooked }}
-
-    {{ selectedSeats }}
     <div class="flex items-center">
       <input
         v-model="partySize"
