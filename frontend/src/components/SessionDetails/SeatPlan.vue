@@ -73,12 +73,8 @@ function findBestSeats(groupSize: number) {
     for (let i = 0; i < groupSize; i++) {
       bestSeats.push(bestStartingPosition + i)
     }
-
     selectedSeats.value = bestSeats
-
   }
-
-
   return bestStartingPosition
 }
 
@@ -100,13 +96,18 @@ function findAllIndexes(str: string, substring: string) {
   return indexes
 }
 
+function buyTickets() {
+  emit('selectedSeats', selectedSeats.value)
+  selectedSeats.value = []
+}
+
 </script>
 
 <template>
   <div class="inline-flex flex-col items-center mt-10">
     {{ alreadyBooked }}
 
-    {{ selectedSeats}}
+    {{ selectedSeats }}
     <div class="flex items-center">
       <input
         v-model="partySize"
@@ -149,7 +150,7 @@ function findAllIndexes(str: string, substring: string) {
 
     <button
       class="bg-yellow-500 rounded-lg p-3 text-white text-xl font-semibold mt-8"
-      @click="$emit('selectedSeats', selectedSeats )"
+      @click="buyTickets()"
     >Buy tickets
     </button>
   </div>

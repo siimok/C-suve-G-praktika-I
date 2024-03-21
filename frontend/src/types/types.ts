@@ -19,10 +19,10 @@ export interface Session {
 }
 
 export interface Ticket {
-  id: number,
+  id?: number,
   sessionId: number,
-  rowNumber: string,
-  seatNumber: string,
+  rowNumber: number,
+  seatNumber: number,
 }
 
 interface Genre {

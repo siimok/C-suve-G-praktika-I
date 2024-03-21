@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,17 +32,21 @@ public class TicketController {
     }
 
     @PostMapping(path = "/tickets")
-    public ResponseEntity<TicketDto> createTicket(@RequestBody TicketDto ticketDto) throws ChangeSetPersister.NotFoundException {
-        if (!sessionServices.isExists(ticketDto.getSessionId())) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<List<TicketDto>> createTicket(@RequestBody List<TicketDto> ticketDtos) throws ChangeSetPersister.NotFoundException {
+        List<TicketDto> createdTickets = new ArrayList<>();
+        for (TicketDto ticketDto : ticketDtos) {
+            if (!sessionServices.isExists(ticketDto.getSessionId())) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            SessionEntity session = sessionServices.findOne(ticketDto.getSessionId()).orElseThrow(ChangeSetPersister.NotFoundException::new);
+
+            TicketEntity ticketEntity = ticketMapper.mapFrom(ticketDto);
+            ticketEntity.setSession(session);
+
+            TicketEntity savedTicketEntity = ticketServices.save(ticketEntity);
+            createdTickets.add(ticketMapper.mapTo(savedTicketEntity));
         }
-        SessionEntity session = sessionServices.findOne(ticketDto.getSessionId()).orElseThrow(ChangeSetPersister.NotFoundException::new);
-
-        TicketEntity ticketEntity = ticketMapper.mapFrom(ticketDto);
-        ticketEntity.setSession(session);
-
-        TicketEntity savedTicketEntity = ticketServices.save(ticketEntity);
-        return new ResponseEntity<>(ticketMapper.mapTo(savedTicketEntity), HttpStatus.CREATED);
+        return new ResponseEntity<>(createdTickets, HttpStatus.CREATED);
     }
 
     @GetMapping(path = "/tickets")

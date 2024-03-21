@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { computed, ref } from 'vue'
 import SeatPlan from '@/components/SessionDetails/SeatPlan.vue'
 import MovieDetails from '@/components/movieDetails/MovieDetails.vue'
+import type { Ticket } from '@/types/types'
 
 const route = useRoute()
 
@@ -74,7 +75,49 @@ const fetchMovie = async (movieId: number) => {
 }
 
 function buyTickets(seatList: number[]) {
-  console.log(seatList)
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(generateTickets(seatList))
+  }
+
+  fetch('http://localhost:8080/api/tickets', requestOptions)
+    .then(async response => {
+      if (!response.ok) {
+        throw new Error('Failed to buy tickets')
+      }
+      // Parse the response JSON
+      return response.json()
+    })
+    .then(data => {
+      // Handle the response data
+      console.log('Tickets bought successfully:', data)
+      // You can perform additional actions with the response data here
+
+      session.value.tickets.push(...data)
+    })
+    .catch(error => {
+      // Handle any errors that occurred during the fetch request
+      console.error('Error buying tickets:', error.message)
+    })
+}
+
+function generateTickets(seatList: number[]) {
+  let ticketList: Ticket[] = []
+
+  for (let seat of seatList) {
+
+    let ticketRow = Math.floor(seat / 10) + 1
+    let ticketSeat = (seat % 10) + 1
+
+    let ticket: Ticket = {
+      sessionId: session.value.id,
+      rowNumber: ticketRow,
+      seatNumber: ticketSeat
+    }
+    ticketList.push(ticket)
+  }
+  return ticketList
 }
 
 </script>
@@ -97,7 +140,6 @@ function buyTickets(seatList: number[]) {
             @selected-seats="buyTickets"
           />
         </div>
-
       </div>
     </div>
   </main>
