@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/api")
 public class GenreController {
     private GenreServices genreServices;
 
@@ -52,7 +53,7 @@ public class GenreController {
             @PathVariable("id") Long id,
             @RequestBody GenreDto genreDto) {
 
-        if(!genreServices.isExists(id)) {
+        if (!genreServices.isExists(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
