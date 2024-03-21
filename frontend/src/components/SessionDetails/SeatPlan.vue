@@ -4,12 +4,13 @@ import { computed, type PropType, type Ref, ref, type UnwrapRef } from 'vue'
 import type { Ticket } from '@/types/types'
 
 const props = defineProps({ tickets: { type: Object as PropType<Array<Ticket>>, required: true } })
+const emit = defineEmits(['selectedSeats'])
 
 const partySize = ref(1)
 
 const alreadyBooked = computed(() => {
   return props.tickets.map(ticket => {
-    return parseInt(ticket.rowNumber + 1) * 10 + parseInt(ticket.seatNumber + 1)
+    return (parseInt(ticket.rowNumber) - 1) * 10 + parseInt(ticket.seatNumber) - 1
   })
 })
 
@@ -33,10 +34,12 @@ function findBestSeats(groupSize: number) {
 
   //mark booked seats.
   alreadyBooked.value.forEach(seatNo => {
-    let rowNumber = Math.floor(seatNo / 10) - 1
+    let rowNumber = Math.floor(seatNo / 10)
     let seatNumber = seatNo % 10
-    seatingPlan[rowNumber] = replaceCharAtIndex(seatingPlan[rowNumber], seatNumber - 1)
+    seatingPlan[rowNumber] = replaceCharAtIndex(seatingPlan[rowNumber], seatNumber)
   })
+
+  console.log(seatingPlan)
 
   let bestScore = 100
   let bestStartingPosition
@@ -58,8 +61,6 @@ function findBestSeats(groupSize: number) {
     })
 
     currentScore = Math.abs(bestAvailableStartSeat - optimalStartSeat) + Math.abs(i - optimalRow) * 2
-    console.log('Score for row: ' + i + ' is ' + currentScore)
-    console.log('Row penalty: ' + Math.abs(bestAvailableStartSeat - optimalStartSeat) + ' Seat penalty: ' + Math.abs(i - optimalRow) * 2)
     if (bestScore > currentScore) {
       bestScore = currentScore
       bestStartingPosition = i * 10 + bestAvailableStartSeat
@@ -94,7 +95,7 @@ function findAllIndexes(str: string, substring: string) {
   let indexes = []
   let index = -1
   while ((index = str.indexOf(substring, index + 1)) !== -1) {
-    indexes.push(index + 1)
+    indexes.push(index)
   }
   return indexes
 }
@@ -102,13 +103,14 @@ function findAllIndexes(str: string, substring: string) {
 </script>
 
 <template>
-  <div>
+  <div class="inline-flex flex-col items-center mt-10">
     {{ alreadyBooked }}
-    {{ selectedSeats }}
-    <div class="flex">
+
+    {{ selectedSeats}}
+    <div class="flex items-center">
       <input
         v-model="partySize"
-        class="border mr-5 w-24 h-10"
+        class="border mr-5 w-24 h-10 pl-4"
         type="number"
         id="tentacles"
         name="tentacles"
@@ -116,32 +118,40 @@ function findAllIndexes(str: string, substring: string) {
         max="10"
       />
       <button
-        @click="console.log(findBestSeats(partySize))"
-      >Generate seats
+        class="bg-yellow-500 rounded-lg p-3 text-white text-xl font-semibold"
+        @click="findBestSeats(partySize)"
+      >Suggest seats
       </button>
     </div>
-  </div>
 
-  <div class="bg-gray-700 p-5 w-80 mt-4">
-    <div class="bg-white h-2 mb-4"></div>
-    <div
-      v-for="i in 7"
-      :key="i"
-    >
-      <button
-        v-for="j in 10"
-        :key="j"
-        class="rounded-b mr-1 mb-3 rounded-lg w-6 h-6 "
-        :class="{
+
+    <div class="bg-gray-700 p-5 mt-4">
+      <div class="bg-white h-2 mb-4"></div>
+      <div
+        v-for="i in Array.from({ length:7 }, (_, index) => index)"
+        :key="i"
+      >
+        <button
+          v-for="j in Array.from({ length: 10 }, (_, index) => index)"
+          :key="j"
+          class="rounded-b mr-1 mb-3 rounded-lg w-8 h-8 "
+          :class="{
           'bg-red-500': alreadyBooked.includes(i * 10 + j),
           'bg-blue-500': selectedSeats.includes(i * 10 + j),
           'bg-gray-100': !alreadyBooked.includes(i * 10 + j) && !selectedSeats.includes(i * 10 + j)
         }"
-        :disabled="alreadyBooked.includes(i * 10 + j)"
-        @click="selectSeat(i * 10 + j)"
-      >
-      </button>
+          :disabled="alreadyBooked.includes(i * 10 + j)"
+          @click="selectSeat(i * 10 + j)"
+        >
+        </button>
+      </div>
     </div>
+
+    <button
+      class="bg-yellow-500 rounded-lg p-3 text-white text-xl font-semibold mt-8"
+      @click="$emit('selectedSeats', selectedSeats )"
+    >Buy tickets
+    </button>
   </div>
 </template>
 
