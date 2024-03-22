@@ -6,14 +6,6 @@ import MovieList from '@/components/movieList/MovieList.vue'
 
 const genres = ref<Array<Genre>>([])
 
-const genreId = ref(-1)
-
-const ageLimit = ref(0)
-
-function selectGenre(id: number) {
-  genreId.value === id ? genreId.value = -1 : genreId.value = id
-}
-
 const fetchGenres = async () => {
   try {
     const response = await fetch('http://localhost:8080/api/genres')
@@ -25,6 +17,7 @@ const fetchGenres = async () => {
   }
 }
 fetchGenres()
+
 
 const movies = ref<Array<Movie>>([])
 
@@ -66,15 +59,32 @@ const fetchMovies = async () => {
 const searchString = ref('')
 let timeoutId: number | null = null
 
+watch(searchString, async () => {
+  if (timeoutId !== null) {
+    clearTimeout(timeoutId as number)
+  }
+
+  timeoutId = setTimeout(() => {
+    fetchMovies()
+  }, 300)
+})
+
+
+const ageLimit = ref(0)
+
 watch(ageLimit, (newX) => {
   fetchMovies()
 })
+
+const genreId = ref(-1)
 
 watch(genreId, (newX) => {
   fetchMovies()
 })
 
-
+function selectGenre(id: number) {
+  genreId.value === id ? genreId.value = -1 : genreId.value = id
+}
 fetchMovies()
 </script>
 
