@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router'
 import { computed, ref } from 'vue'
 import SeatPlan from '@/components/SessionDetails/SeatPlan.vue'
 import MovieDetails from '@/components/movieDetails/MovieDetails.vue'
-import type { Ticket } from '@/types/types'
+import type { Movie, Session, Ticket } from '@/types/types'
 import { useSnackbarStore } from '@/stores/snackbarStore'
 
 const snackbarStore = useSnackbarStore()
@@ -30,7 +30,7 @@ const sessionDate = computed(() => {
   return startTime ? new Date(startTime).toLocaleDateString('en-US').replace(/\//g, '.') : ''
 })
 
-const movie = ref({
+const movie = ref<Movie>({
   id: 0,
   name: '',
   rating: 10,
@@ -40,14 +40,14 @@ const movie = ref({
   description: '',
   imageUrl: '',
   genres: [],
-  sessions: []
+  sessions: [] as Session[]
 })
 
 const session = ref({
   id: 0,
   movieId: 0,
   startTime: '',
-  tickets: []
+  tickets: [] as Ticket[]
 })
 
 const fetchSession = async () => {
@@ -92,7 +92,7 @@ function buyTickets(seatList: number[]) {
       // Parse the response JSON
       return response.json()
     })
-    .then(data => {
+    .then((data: Ticket[]) => {
       // Handle the response data
       snackbarStore.setSuccessSnackbar('Ticket(s) were bought!')
 
@@ -127,7 +127,7 @@ function generateTickets(seatList: number[]) {
 <template>
   <main class="flex justify-center">
     <div class="max-w-[75rem] w-full mx-4 pt-4 md:pt-16">
-      <movie-details :movie />
+      <movie-details :movie="movie" />
 
       <div class="my-12 font-semibold text-2xl">
         <div class="flex">

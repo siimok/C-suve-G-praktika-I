@@ -2,7 +2,7 @@
 import { computed, type PropType } from 'vue'
 import type { Session } from '@/types/types'
 
-const props = defineProps({ session: { type: Object as PropType<Session> } })
+const props = defineProps({ session: { type: Object as PropType<Session>, required: true } })
 
 const day = computed(() => {
   const startTime = props.session.startTime

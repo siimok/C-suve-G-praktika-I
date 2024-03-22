@@ -4,10 +4,11 @@ import { useRoute } from 'vue-router'
 import { ref } from 'vue'
 import MovieDetails from '@/components/movieDetails/MovieDetails.vue'
 import SessionList from '@/components/movieDetails/SessionList.vue'
+import type { Movie } from '@/types/types'
 
 const route = useRoute()
 
-const movie = ref({
+const movie = ref<Movie>({
   id: 0,
   name: '',
   rating: 10,
@@ -38,7 +39,7 @@ fetchMovie()
 <template>
   <main class="flex justify-center">
     <div class="max-w-[75rem] w-full mx-4 pt-4 md:pt-16">
-      <movie-details :movie />
+      <movie-details :movie="movie" />
       <session-list :sessions="movie.sessions"></session-list>
     </div>
   </main>

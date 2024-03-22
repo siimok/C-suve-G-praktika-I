@@ -10,7 +10,7 @@ const partySize = ref(1)
 
 const alreadyBooked = computed(() => {
   return props.tickets.map(ticket => {
-    return (parseInt(ticket.rowNumber) - 1) * 10 + parseInt(ticket.seatNumber) - 1
+    return (ticket.rowNumber - 1) * 10 + ticket.seatNumber - 1
   })
 })
 
