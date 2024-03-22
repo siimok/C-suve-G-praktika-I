@@ -8,15 +8,7 @@ import { RouterLink, RouterView } from 'vue-router'
       <nav>
         <RouterLink
           class="mr-4"
-          to="/">Showtimes
-        </RouterLink>
-        <RouterLink
-          class="mr-4"
-          to="/movies">Movies
-        </RouterLink>
-        <RouterLink
-          class="mr-4"
-          to="/">Personal
+          to="/">Movies
         </RouterLink>
       </nav>
     </div>
