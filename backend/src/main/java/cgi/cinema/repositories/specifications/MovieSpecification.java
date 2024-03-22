@@ -25,7 +25,7 @@ public class MovieSpecification {
                 predicates.add(cb.greaterThanOrEqualTo(root.join("sessions").get("startTime"), startTime));
             }
             if (minimumAge != null) {
-                predicates.add(cb.greaterThanOrEqualTo(root.get("minimumAge"), minimumAge));
+                predicates.add(cb.lessThan(root.get("minimumAge"), minimumAge + 1));
             }
             if (keyword != null && !keyword.isEmpty()) {
                 predicates.add(cb.like(cb.lower(root.get("name")), "%" + keyword.toLowerCase() + "%"));
