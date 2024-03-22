@@ -66,3 +66,5 @@
 3. Authorization/authentication
 4. Session search. Partly because current design wouldnt have really worked with session search.
 5. Movie reccomendations.
+
+## Time spent: 23h
