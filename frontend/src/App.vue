@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import TheSnackbar from '@/components/TheSnackbar.vue'
 </script>
 
 <template>
@@ -15,7 +16,6 @@ import { RouterLink, RouterView } from 'vue-router'
   </header>
 
   <RouterView />
-</template>
 
-<style scoped>
-</style>
+  <the-snackbar/>
+</template>

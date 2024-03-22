@@ -5,6 +5,9 @@ import { computed, ref } from 'vue'
 import SeatPlan from '@/components/SessionDetails/SeatPlan.vue'
 import MovieDetails from '@/components/movieDetails/MovieDetails.vue'
 import type { Ticket } from '@/types/types'
+import { useSnackbarStore } from '@/stores/snackbarStore'
+
+const snackbarStore = useSnackbarStore()
 
 const route = useRoute()
 
@@ -91,8 +94,7 @@ function buyTickets(seatList: number[]) {
     })
     .then(data => {
       // Handle the response data
-      console.log('Tickets bought successfully:', data)
-      // You can perform additional actions with the response data here
+      snackbarStore.setSuccessSnackbar('Ticket(s) were bought!')
 
       session.value.tickets.push(...data)
     })

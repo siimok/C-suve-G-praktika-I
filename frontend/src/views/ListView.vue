@@ -85,6 +85,7 @@ watch(genreId, (newX) => {
 function selectGenre(id: number) {
   genreId.value === id ? genreId.value = -1 : genreId.value = id
 }
+
 fetchMovies()
 </script>
 
@@ -99,7 +100,7 @@ fetchMovies()
           placeholder="Film name..."
         >
         <div class="pt-2">
-          <label class=" font-semibold text-xl mr-5">Age limit</label>
+          <label class=" font-semibold text-xl mr-5">Age</label>
           <select
             v-model="ageLimit"
             class="border rounded border-gray-800 shadow"
