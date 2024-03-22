@@ -2,8 +2,8 @@
 
 ## Technologies Used
 
-- **Frontend**: Vue.js with Tailwind CSS
-- **Backend**: Spring Boot with Java 21(latest LTS)
+- **Frontend**: Vue.js(3.4.21) with Tailwind CSS
+- **Backend**: Spring Boot(3.2.3) with Java 21(latest LTS)
 
 
 ## Usage
