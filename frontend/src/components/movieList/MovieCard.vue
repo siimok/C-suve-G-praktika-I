@@ -25,6 +25,12 @@ const languageFlag = computed(() =>
           :src="languageFlag"
           class="absolute bottom-2 right-2"
         >
+        <div
+          v-if="movie.minimumAge"
+          class="absolute rounded-full bottom-2 left-2 px-2 py-1 bg-gray-500"
+        >
+          {{ movie.minimumAge }} +
+        </div>
       </div>
       <div class="w-2/3 p-4">
         <div>
